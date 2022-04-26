@@ -2,9 +2,11 @@ package ru.learnup.bookStore.entities;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.data.auditing.AuditingHandler;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,23 +18,28 @@ import java.util.Objects;
 @Builder
 public class Book {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
 
     @Column(nullable = false)
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId"),
+            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "authorId")
     )
     private List<Author> authors;
 
-    @OneToOne(optional = false, mappedBy = "bookId")
+    public void addAuthor(Author author) {
+        if (authors == null) authors = new ArrayList<>();
+        authors.add(author);
+    }
+
+    @OneToOne(mappedBy = "book")
     private BooksWarehouse warehouse;
 
-    @OneToMany(mappedBy = "bookId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetailsList;
 
     @Column(nullable = false)
@@ -51,7 +58,7 @@ public class Book {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Book book = (Book) o;
-        return id != null && Objects.equals(id, book.id);
+        return bookId != null && Objects.equals(bookId, book.bookId);
     }
 
     @Override
@@ -62,7 +69,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "authorId=" + bookId +
                 ", title='" + title + '\'' +
                 ", yearPublished=" + yearPublished +
                 ", numberOfPages=" + numberOfPages +

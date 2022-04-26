@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,11 +18,16 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long authorId;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Book> books;
+
+    public void addBook(Book book) {
+        if (books == null) books = new ArrayList<>();
+        books.add(book);
+    }
 
     @Column(nullable = false)
     private String firstName;
@@ -37,7 +43,7 @@ public class Author {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
-                "id = " + id + ")";
+                "authorId = " + authorId + ")";
     }
 
     @Override
@@ -45,7 +51,7 @@ public class Author {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Author author = (Author) o;
-        return id != null && Objects.equals(id, author.id);
+        return authorId != null && Objects.equals(authorId, author.authorId);
     }
 
     @Override

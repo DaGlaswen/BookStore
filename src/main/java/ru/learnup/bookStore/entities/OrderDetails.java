@@ -17,7 +17,7 @@ public class OrderDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long orderDetailsId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id")
@@ -25,7 +25,7 @@ public class OrderDetails {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "ordered_book_id")
-    private Book bookId;
+    private Book book;
 
     @Min(value = 0)
     @Column(nullable = false)
@@ -40,7 +40,7 @@ public class OrderDetails {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
-                "id = " + id + ")";
+                "authorId = " + orderDetailsId + ")";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class OrderDetails {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         OrderDetails that = (OrderDetails) o;
-        return id != null && Objects.equals(id, that.id);
+        return orderDetailsId != null && Objects.equals(orderDetailsId, that.orderDetailsId);
     }
 
     @Override

@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query(value = "select * from book_authors as ba " +
-            "inner join Book as b on ba.book_id = b.id " +
-            "inner join Author as a on a.id = ba.author_id " +
+    @Query(value = "select b.book_id, b.number_of_pages, b.price, b.title, b.year_published from book_authors as ba " +
+            "inner join book as b on ba.book_id = b.book_id " +
+            "inner join author as a on a.author_id = ba.author_id " +
             "where a.first_name = :firstName and a.last_name =:lastName", nativeQuery = true)
     List<Book> findBooksByAuthor(@Param("firstName") String firstName, @Param("lastName") String lastName);
 }

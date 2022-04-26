@@ -14,11 +14,12 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long customerId;
 
     @Column(nullable = false)
     private String firstName;
@@ -30,22 +31,17 @@ public class Customer {
     @Column(nullable = false)
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "customerId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<BookOrder> bookOrders;
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ")";
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Customer customer = (Customer) o;
-        return id != null && Objects.equals(id, customer.id);
+        return customerId != null && Objects.equals(customerId, customer.customerId);
     }
 
     @Override

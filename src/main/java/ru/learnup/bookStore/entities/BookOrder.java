@@ -18,11 +18,11 @@ public class BookOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long bookOrderId;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customerId;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+    private Customer customer;
 
     @OneToMany(mappedBy = "bookOrderId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetailsList;
@@ -36,7 +36,7 @@ public class BookOrder {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         BookOrder bookOrder = (BookOrder) o;
-        return id != null && Objects.equals(id, bookOrder.id);
+        return bookOrderId != null && Objects.equals(bookOrderId, bookOrder.bookOrderId);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class BookOrder {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
-                "id = " + id + ")";
+                "authorId = " + bookOrderId + ")";
     }
 }
