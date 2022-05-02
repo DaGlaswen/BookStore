@@ -1,4 +1,4 @@
-package ru.learnup.bookStore.entities;
+package ru.learnup.bookStore.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;

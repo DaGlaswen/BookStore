@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.learnup</groupId>
-    <artifactId>LearnUpHW23</artifactId>
+    <artifactId>BookStore</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>LearnUpHW23</name>
-    <description>LearnUpHW23</description>
+    <name>BookStore</name>
+    <description>E-commerce book store</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -33,6 +33,10 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

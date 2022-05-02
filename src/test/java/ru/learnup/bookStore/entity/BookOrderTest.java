@@ -1,15 +1,13 @@
-package ru.learnup.bookStore.entities;
+package ru.learnup.bookStore.entity;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ru.learnup.bookStore.repositories.CustomerRepository;
-import ru.learnup.bookStore.repositories.OrderRepository;
+import ru.learnup.bookStore.repository.CustomerRepository;
+import ru.learnup.bookStore.repository.OrderRepository;
 
 import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BookOrderTest {

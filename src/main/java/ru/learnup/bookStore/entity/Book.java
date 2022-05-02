@@ -1,8 +1,7 @@
-package ru.learnup.bookStore.entities;
+package ru.learnup.bookStore.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.springframework.data.auditing.AuditingHandler;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;

@@ -1,15 +1,12 @@
-package ru.learnup.bookStore.repositories;
+package ru.learnup.bookStore.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.learnup.bookStore.entities.Author;
-import ru.learnup.bookStore.entities.Book;
+import ru.learnup.bookStore.entity.Author;
+import ru.learnup.bookStore.entity.Book;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BookRepositoryTest {

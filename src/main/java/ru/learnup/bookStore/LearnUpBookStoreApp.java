@@ -3,15 +3,8 @@ package ru.learnup.bookStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import ru.learnup.bookStore.entities.Author;
-import ru.learnup.bookStore.entities.Book;
-import ru.learnup.bookStore.repositories.AuthorRepository;
-import ru.learnup.bookStore.repositories.BookRepository;
-import ru.learnup.bookStore.repositories.OrderRepository;
-import ru.learnup.bookStore.services.BookService;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.learnup.bookStore.repository.AuthorRepository;
+import ru.learnup.bookStore.repository.BookRepository;
 
 @SpringBootApplication
 public class LearnUpBookStoreApp {
