@@ -24,7 +24,7 @@ public class BookOrder {
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
 
-    @OneToMany(mappedBy = "bookOrderId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetailsList;
 
     @Min(value = 0)

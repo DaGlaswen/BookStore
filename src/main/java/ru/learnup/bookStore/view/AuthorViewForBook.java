@@ -2,16 +2,15 @@ package ru.learnup.bookStore.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.learnup.bookStore.entity.Book;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class AuthorView {
+@NoArgsConstructor
+public class AuthorViewForBook {
 
     private Long authorId;
+
     private String firstName;
     private String lastName;
-    private List<BookViewForAuthor> books;
 }

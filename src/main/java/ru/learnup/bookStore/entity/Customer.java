@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -22,10 +23,11 @@ public class Customer {
     private Long customerId;
 
     @Column(nullable = false)
+    @NotBlank
     private String firstName;
 
-
     @Column(nullable = false)
+    @NotBlank
     private String lastName;
 
     @Column(nullable = false)

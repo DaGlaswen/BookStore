@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.bookStore.entity.Author;
+import ru.learnup.bookStore.entity.Book;
 import ru.learnup.bookStore.filter.AuthorFilter;
 import ru.learnup.bookStore.repository.AuthorRepository;
 
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.Specification.where;
 import static ru.learnup.bookStore.specification.AuthorSpecification.byFilter;
@@ -25,6 +27,12 @@ public class AuthorService {
     @Transactional
     public Author createAuthor(Author author) {
         return authorRepository.save(author);
+    }
+
+    @Transactional
+    public Author addBookToAuthor(Author author, Book book) {
+        Optional<List<Book>> books = Optional.of(author.getBooks());
+        books.ifPresent(author.setBooks(books.get().add(book)));
     }
 
     public List<Author> getAuthors() {

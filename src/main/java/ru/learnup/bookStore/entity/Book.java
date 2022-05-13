@@ -5,6 +5,8 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +24,7 @@ public class Book {
     private Long bookId;
 
     @Column(nullable = false)
+    @NotBlank
     private String title;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -42,6 +45,7 @@ public class Book {
     private List<OrderDetails> orderDetailsList;
 
     @Column(nullable = false)
+    @Positive
     private Integer yearPublished;
 
     @Column(nullable = false)

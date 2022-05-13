@@ -21,7 +21,7 @@ public class OrderDetails {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id")
-    private BookOrder bookOrderId;
+    private BookOrder bookOrder;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "ordered_book_id")
