@@ -6,8 +6,10 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,12 +23,12 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authorId;
 
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authors")
     @ToString.Exclude
-    private List<Book> books;
+    private Set<Book> books = new HashSet<>();
 
     public void addBook(Book book) {
-        if (books == null) books = new ArrayList<>();
+        if (books == null) books = new HashSet<>();
         books.add(book);
     }
 

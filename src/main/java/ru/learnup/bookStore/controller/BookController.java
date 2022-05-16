@@ -1,9 +1,7 @@
 package ru.learnup.bookStore.controller;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,43 +10,46 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.learnup.bookStore.dto.BookDTO;
 import ru.learnup.bookStore.entity.Book;
-import ru.learnup.bookStore.mapper.BookModelAssembler;
-import ru.learnup.bookStore.service.BookService;
+import ru.learnup.bookStore.service.implementation.BookServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("books")
 public class BookController {
 
-    BookService bookService;
+    BookServiceImpl bookServiceImpl;
     ModelMapper modelMapper;
-    BookModelAssembler assembler;
 
-    public BookController(BookService bookService, ModelMapper modelMapper, BookModelAssembler assembler) {
-        this.bookService = bookService;
+    public BookController(BookServiceImpl bookServiceImpl, ModelMapper modelMapper) {
+        this.bookServiceImpl = bookServiceImpl;
         this.modelMapper = modelMapper;
-        this.assembler = assembler;
     }
 
     @GetMapping
     @ResponseBody
-    public CollectionModel<BookDTO.Response.Public> getAllBooks() {
-        List<Book> books = bookService.getAllBooks();
-        return assembler.toCollectionModel(books);
+    public List<BookDTO.Response.Public> getAllBooks() {
+        List<Book> books = bookServiceImpl.getAllBooks();
+        List<BookDTO.Response.Public> mappedBooks = new ArrayList<>(books.size());
+        for (Book book :
+                books) {
+            mappedBooks.add(modelMapper.map(book, BookDTO.Response.Public.class));
+        }
+        return mappedBooks;
     }
 
     @GetMapping("/{bookId}")
     @ResponseBody
     public BookDTO.Response.Public getBookById(@PathVariable Long bookId) {
-        Book book = bookService.getById(bookId);
-        return assembler.toModel(book);
+        Book book = bookServiceImpl.getById(bookId);
+        return modelMapper.map(book, BookDTO.Response.Public.class);
     }
 
     @PostMapping
     @ResponseBody
     public BookDTO.Response.Public createBook(BookDTO.Request.Public newBook) {
-        Book book = assembler.fromModel(newBook);
-        return assembler.toModel(bookService.createBook(book));
+        Book book = modelMapper.map(newBook, Book.class);
+        return modelMapper.map(bookServiceImpl.createBook(book), BookDTO.Response.Public.class);
     }
 }

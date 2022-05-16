@@ -1,4 +1,4 @@
-package ru.learnup.bookStore.service;
+package ru.learnup.bookStore.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.Lock;
@@ -11,17 +11,16 @@ import ru.learnup.bookStore.repository.BookRepository;
 
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
-public class BookService {
+public class BookServiceImpl implements ru.learnup.bookStore.service.interfaces.BookService {
 
     BookRepository bookRepository;
     AuthorRepository authorRepository;
 
-    public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
     }
@@ -42,7 +41,7 @@ public class BookService {
         }
     }
 
-    public Boolean delete(Long id) {
+    public Boolean deleteBook(Long id) {
         bookRepository.delete(bookRepository.getById(id));
         return true;
     }

@@ -20,7 +20,7 @@ public enum BookDTO {
         ;
 
         @Data
-        public static class Public extends RepresentationModel<BookDTO.Response.Public> implements BookId, Title, YearPublished, NumberOfPages, Price, BookWarehouseDTOField {
+        public static class Public implements BookId, Title, YearPublished, NumberOfPages, Price, BookWarehouseDTOField {
             Long bookId;
             String title;
             Integer yearPublished;

@@ -1,4 +1,4 @@
-package ru.learnup.bookStore.service;
+package ru.learnup.bookStore.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,6 +9,7 @@ import ru.learnup.bookStore.entity.Author;
 import ru.learnup.bookStore.entity.Book;
 import ru.learnup.bookStore.filter.AuthorFilter;
 import ru.learnup.bookStore.repository.AuthorRepository;
+import ru.learnup.bookStore.service.interfaces.AuthorService;
 
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
@@ -20,7 +21,7 @@ import static ru.learnup.bookStore.specification.AuthorSpecification.byFilter;
 
 @Service
 @Slf4j
-public class AuthorService {
+public class AuthorServiceImpl implements AuthorService {
 
     private AuthorRepository authorRepository;
 
@@ -29,11 +30,11 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
-    @Transactional
-    public Author addBookToAuthor(Author author, Book book) {
-        Optional<List<Book>> books = Optional.of(author.getBooks());
-        books.ifPresent(author.setBooks(books.get().add(book)));
-    }
+//    @Transactional
+//    public Author addBookToAuthor(Author author, Book book) {
+//        Optional<List<Book>> books = Optional.of(author.getBooks());
+//        books.ifPresent(author.setBooks(books.get().add(book)));
+//    }
 
     public List<Author> getAuthors() {
         return authorRepository.findAll();

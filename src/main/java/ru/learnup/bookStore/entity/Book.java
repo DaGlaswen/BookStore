@@ -8,8 +8,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,14 +29,17 @@ public class Book {
     @NotBlank
     private String title;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId"),
             inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "authorId")
     )
-    private List<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
     public void addAuthor(Author author) {
-        if (authors == null) authors = new ArrayList<>();
+        if (authors == null) authors = new HashSet<>();
         authors.add(author);
     }
 

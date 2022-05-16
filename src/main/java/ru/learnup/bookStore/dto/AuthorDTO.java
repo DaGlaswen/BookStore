@@ -15,7 +15,7 @@ public enum AuthorDTO {
         ;
 
         @Data
-        public static class Public extends RepresentationModel<Public> implements AuthorId, FirstName, LastName, Books {
+        public static class Public implements AuthorId, FirstName, LastName, Books {
             Long authorId;
             String firstName;
             String lastName;
