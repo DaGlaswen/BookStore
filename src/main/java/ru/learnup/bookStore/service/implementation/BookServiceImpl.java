@@ -1,6 +1,8 @@
 package ru.learnup.bookStore.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import ru.learnup.bookStore.repository.BookRepository;
 
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -51,8 +54,15 @@ public class BookServiceImpl implements ru.learnup.bookStore.service.interfaces.
         return book;
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<Book> getBooks(Pageable pageable) {
+
+        Page<Book> page = bookRepository.findAll(pageable);
+        List<Book> books = new ArrayList<>(page.getSize());
+        for (Book book :
+                page) {
+            books.add(book);
+        }
+        return books;
     }
 }
 

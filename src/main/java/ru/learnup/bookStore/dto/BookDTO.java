@@ -1,5 +1,6 @@
 package ru.learnup.bookStore.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
@@ -20,15 +21,19 @@ public enum BookDTO {
         ;
 
         @Data
+        @Schema(description = "ResponseDTO Автора")
         public static class Public implements BookId, Title, YearPublished, NumberOfPages, Price, BookWarehouseDTOField {
             Long bookId;
             String title;
             Integer yearPublished;
             Integer numberOfPages;
             Integer price;
+            @Schema(description = "Nested ресурс склада")
             BookWarehouseDTO.Utility.Pure bookWarehouse;
+            @Schema(description = "Nested ресурс деталей заказа")
             List<OrderDetailsDTO.Utility.Pure> orderDetailsDTOList;
-            List<AuthorDTO> authorDTOs;
+            @Schema(description = "Nested ресурс авторов")
+            List<AuthorDTO.Utility.Pure> authorDTOs;
         }
     }
 
@@ -36,14 +41,23 @@ public enum BookDTO {
         ;
 
         @Data
+        @Schema(description = "RequestDTO Книги")
         public static class Public implements YearPublished, Title, NumberOfPages, Price {
             String title;
             Integer yearPublished;
             Integer numberOfPages;
             Integer price;
-            List<AuthorDTO> authorDTOs;
+            @Schema(description = "Nested ресурс авторов")
+            List<AuthorDTO.Utility.Pure> authorDTOs;
+            @Schema(description = "Nested ресурс склада")
             BookWarehouseDTO.Utility.Pure bookWarehouse;
-            List<OrderDetailsDTO> orderDetailsDTOList;
+            @Schema(description = "Nested ресурс деталей заказа")
+            List<OrderDetailsDTO.Utility.Pure> orderDetailsDTOList;
+        }
+
+        @Data
+        public static class Id implements BookId {
+            Long bookId;
         }
     }
 

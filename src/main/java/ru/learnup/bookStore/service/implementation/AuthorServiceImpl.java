@@ -1,12 +1,12 @@
 package ru.learnup.bookStore.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.bookStore.entity.Author;
-import ru.learnup.bookStore.entity.Book;
 import ru.learnup.bookStore.filter.AuthorFilter;
 import ru.learnup.bookStore.repository.AuthorRepository;
 import ru.learnup.bookStore.service.interfaces.AuthorService;
@@ -14,7 +14,6 @@ import ru.learnup.bookStore.service.interfaces.AuthorService;
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.Specification.where;
 import static ru.learnup.bookStore.specification.AuthorSpecification.byFilter;
@@ -36,7 +35,7 @@ public class AuthorServiceImpl implements AuthorService {
 //        books.ifPresent(author.setBooks(books.get().add(book)));
 //    }
 
-    public List<Author> getAuthors() {
+    public List<Author> getAuthors(Pageable pageable) {
         return authorRepository.findAll();
     }
 

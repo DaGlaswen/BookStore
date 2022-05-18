@@ -1,5 +1,6 @@
 package ru.learnup.bookStore.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.Value;
 import org.springframework.hateoas.RepresentationModel;
@@ -15,10 +16,12 @@ public enum AuthorDTO {
         ;
 
         @Data
+        @Schema(description = "ResponseDTO Автора")
         public static class Public implements AuthorId, FirstName, LastName, Books {
             Long authorId;
             String firstName;
             String lastName;
+            @Schema(description = "Nested ресурс книги")
             List<BookDTO.Utility.Pure> books;
         }
     }
@@ -27,8 +30,8 @@ public enum AuthorDTO {
         ;
 
         @Data
-        public static class Public implements AuthorId, FirstName, LastName {
-            Long authorId;
+        @Schema(description = "RequestDTO Автора")
+        public static class Public implements FirstName, LastName {
             String firstName;
             String lastName;
         }
@@ -38,8 +41,8 @@ public enum AuthorDTO {
         ;
 
         @Data
-        public static class Pure implements AuthorId, FirstName, LastName {
-            Long authorId;
+        @Schema(description = "Вспомогательный DTO Автора. Без id и nested ресурсов")
+        public static class Pure implements FirstName, LastName {
             String firstName;
             String lastName;
         }
