@@ -3,6 +3,7 @@ package ru.learnup.bookStore.service.implementation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,6 +64,10 @@ public class BookServiceImpl implements ru.learnup.bookStore.service.interfaces.
             books.add(book);
         }
         return books;
+    }
+
+    public List<Book> getAllBySpec(Specification<Book> spec) {
+        return bookRepository.findAll(spec);
     }
 }
 

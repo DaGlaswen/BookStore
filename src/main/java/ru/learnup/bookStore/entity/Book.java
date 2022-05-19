@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +43,7 @@ public class Book {
     }
 
     @OneToOne(mappedBy = "book")
-    private BooksWarehouse warehouse;
+    private BookWarehouse warehouse;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetailsList;

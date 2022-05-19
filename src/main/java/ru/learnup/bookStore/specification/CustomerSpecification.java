@@ -1,7 +1,7 @@
 package ru.learnup.bookStore.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-import ru.learnup.bookStore.entity.Author;
+import ru.learnup.bookStore.entity.Customer;
 import ru.learnup.bookStore.specification.util.SpecSearchCriteria;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -9,11 +9,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-public class AuthorSpecification implements Specification<Author> {
+public class CustomerSpecification implements Specification<Customer> {
 
     private SpecSearchCriteria criteria;
 
-    public AuthorSpecification(final SpecSearchCriteria criteria) {
+    public CustomerSpecification(final SpecSearchCriteria criteria) {
         super();
         this.criteria = criteria;
     }
@@ -24,7 +24,7 @@ public class AuthorSpecification implements Specification<Author> {
 
     @Override
     public Predicate toPredicate(
-            Root<Author> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+            Root<Customer> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
         switch (criteria.getOperation()) {
             case EQUALITY:

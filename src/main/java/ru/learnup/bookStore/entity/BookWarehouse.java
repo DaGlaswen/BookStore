@@ -14,7 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @ToString
-public class BooksWarehouse {
+public class BookWarehouse {
 
     @Id
     private Long bookId;
@@ -33,7 +33,7 @@ public class BooksWarehouse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        BooksWarehouse that = (BooksWarehouse) o;
+        BookWarehouse that = (BookWarehouse) o;
         return bookId != null && Objects.equals(bookId, that.bookId);
     }
 
