@@ -2,8 +2,10 @@ package ru.learnup.bookStore.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("authors")
+@RequestMapping("api/v1/authors")
 public class AuthorController {
 
     AuthorServiceImpl authorServiceImpl;
@@ -31,8 +33,9 @@ public class AuthorController {
     }
 
     @PostMapping
+    @Secured("ROLE_ADMIN")
     @ResponseBody
-    public AuthorDTO.Response.Public createAuthor(AuthorDTO.Request.Public newAuthor) {
+    public AuthorDTO.Response.Public createAuthor(@RequestBody AuthorDTO.Request.Public newAuthor) {
         Author author = modelMapper.map(newAuthor, Author.class);
         return modelMapper.map(authorServiceImpl.createAuthor(author), AuthorDTO.Response.Public.class);
     }

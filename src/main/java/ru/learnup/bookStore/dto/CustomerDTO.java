@@ -15,8 +15,7 @@ public enum CustomerDTO {
         ;
 
         @Data
-        public static class Pure implements CustomerId, FirstName, LastName, BirthDate {
-            Long customerId;
+        public static class Pure implements FirstName, LastName, BirthDate {
             String firstName;
             String lastName;
             LocalDate birthDate;

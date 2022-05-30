@@ -28,9 +28,11 @@ public enum BookOrderDTO {
         ;
 
         @Data
-        public static class Public implements BookOrderId {
+        public static class Public implements CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount {
 
-            Long bookOrderId;
+            CustomerDTO.Utility.Pure customer;
+            List<OrderDetailsDTO.Utility.Pure> orderDetails;
+            Integer totalCheckAmount;
         }
     }
 
@@ -38,10 +40,9 @@ public enum BookOrderDTO {
         ;
 
         @Data
-        public static class Pure implements BookOrderId, CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount {
-            Long bookOrderId;
-            CustomerDTO.Utility.Pure customer;
-            List<OrderDetailsDTO.Utility.Pure> orderDetails;
+        public static class Pure implements CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount {
+            CustomerDTO.Utility.Pure customer; // ??
+            List<OrderDetailsDTO.Utility.Pure> orderDetails; // ??
             Integer totalCheckAmount;
         }
 

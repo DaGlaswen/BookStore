@@ -10,8 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.common.base.Joiner;
-import ru.learnup.bookStore.specification.util.SearchOperation;
-import ru.learnup.bookStore.specification.util.SpecSearchCriteria;
 
 public class CriteriaParser {
 

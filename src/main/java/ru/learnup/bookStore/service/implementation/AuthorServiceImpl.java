@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.bookStore.entity.Author;
-import ru.learnup.bookStore.filter.AuthorFilter;
 import ru.learnup.bookStore.repository.AuthorRepository;
 import ru.learnup.bookStore.service.interfaces.AuthorService;
 
@@ -16,7 +15,6 @@ import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 import static org.springframework.data.jpa.domain.Specification.where;
-import static ru.learnup.bookStore.specification.AuthorSpecification.byFilter;
 
 @Service
 @Slf4j
@@ -39,10 +37,10 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findAll();
     }
 
-    public Author getAuthorBy(AuthorFilter filter) {
-        Specification<Author> specification = where(byFilter(filter));
-        return authorRepository.findAll(specification);
-    }
+//    public Author getAuthorBy(AuthorFilter filter) {
+//        Specification<Author> specification = where(byFilter(filter));
+//        return authorRepository.findAll(specification);
+//    }
 
     @Transactional
     @Lock(value = LockModeType.READ)

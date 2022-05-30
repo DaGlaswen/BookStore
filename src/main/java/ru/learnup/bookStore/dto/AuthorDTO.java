@@ -8,6 +8,7 @@ import org.springframework.hateoas.RepresentationModel;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.Set;
 
 public enum AuthorDTO {
     ;
@@ -22,7 +23,7 @@ public enum AuthorDTO {
             String firstName;
             String lastName;
             @Schema(description = "Nested ресурс книги")
-            List<BookDTO.Utility.Pure> books;
+            Set<BookDTO.Utility.Pure> books;
         }
     }
 
@@ -30,10 +31,10 @@ public enum AuthorDTO {
         ;
 
         @Data
-        @Schema(description = "RequestDTO Автора")
-        public static class Public implements FirstName, LastName {
+        public static class Public implements FirstName, LastName, Books {
             String firstName;
             String lastName;
+            Set<BookDTO.Utility.Pure> books;
         }
     }
 
@@ -41,7 +42,7 @@ public enum AuthorDTO {
         ;
 
         @Data
-        @Schema(description = "Вспомогательный DTO Автора. Без id и nested ресурсов")
+        @Schema(description = "Вспомогательный DTO Автора. Без roleId и nested ресурсов")
         public static class Pure implements FirstName, LastName {
             String firstName;
             String lastName;
@@ -61,7 +62,7 @@ public enum AuthorDTO {
     }
 
     private interface Books {
-        List<BookDTO.Utility.Pure> getBooks();
+        Set<BookDTO.Utility.Pure> getBooks();
     }
 
 

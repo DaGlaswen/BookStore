@@ -14,8 +14,8 @@ public enum OrderDetailsDTO {
 
         @Data
         public static class Pure implements BookOrderDTOField, BookDTOField, Quantity, TotalPrice {
-            BookDTO.Utility.Pure book;
-            BookOrderDTO.Utility.Pure bookOrder;
+            BookDTO.Utility.Pure book; //??
+            BookOrderDTO.Utility.Pure bookOrder; //??
             Integer quantity;
             Integer totalPrice;
         }
@@ -38,8 +38,12 @@ public enum OrderDetailsDTO {
         ;
 
         @Data
-        public static class Public implements OrderDetailsId {
-            Long orderDetailsId;
+        public static class Public implements BookOrderDTOField, BookDTOField, Quantity, TotalPrice {
+
+            BookDTO.Utility.Pure book;
+            BookOrderDTO.Utility.Pure bookOrder;
+            Integer quantity;
+            Integer totalPrice;
         }
     }
 

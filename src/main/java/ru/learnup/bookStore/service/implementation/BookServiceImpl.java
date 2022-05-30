@@ -16,6 +16,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -45,37 +46,21 @@ public class BookServiceImpl implements ru.learnup.bookStore.service.interfaces.
         }
     }
 
+    @Transactional
     public Boolean deleteBook(Long id) {
         bookRepository.delete(bookRepository.getById(id));
         return true;
     }
 
     public Book getById(Long id) throws EntityNotFoundException {
-        Book book = bookRepository.getById(id);
-        return book;
+        return bookRepository.getById(id);
     }
 
     public List<Book> getBooks(Pageable pageable) {
-
-        Page<Book> page = bookRepository.findAll(pageable);
-        List<Book> books = new ArrayList<>(page.getSize());
-        for (Book book :
-                page) {
-            books.add(book);
-        }
-        return books;
+        return bookRepository.findAll(pageable).stream().collect(Collectors.toList());
     }
 
     public List<Book> getAllBySpec(Specification<Book> spec) {
         return bookRepository.findAll(spec);
     }
 }
-
-//    public void testingMethod() {
-//        Book harry = Book.builder().numberOfPages(69).price(45).title("Harry Potter").yearPublished(1999).build();
-//        Author jordan = Author.builder().firstName("Jordan").lastName("Peterson")
-//                .books(List.of(harry)).build();
-//        authorRepository.save(jordan);
-//        bookRepository.save(harry);
-//        Author jorda = authorRepository.findFirstByFirstNameAndLastName("Jordan", "Peterson");
-//    }

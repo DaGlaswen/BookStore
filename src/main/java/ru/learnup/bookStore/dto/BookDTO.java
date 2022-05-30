@@ -12,6 +12,7 @@ import ru.learnup.bookStore.entity.Book;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.Set;
 
 
 public enum BookDTO {
@@ -21,19 +22,15 @@ public enum BookDTO {
         ;
 
         @Data
-        @Schema(description = "ResponseDTO Автора")
         public static class Public implements BookId, Title, YearPublished, NumberOfPages, Price, BookWarehouseDTOField {
             Long bookId;
             String title;
             Integer yearPublished;
             Integer numberOfPages;
             Integer price;
-            @Schema(description = "Nested ресурс склада")
             BookWarehouseDTO.Utility.Pure bookWarehouse;
-            @Schema(description = "Nested ресурс деталей заказа")
             List<OrderDetailsDTO.Utility.Pure> orderDetailsDTOList;
-            @Schema(description = "Nested ресурс авторов")
-            List<AuthorDTO.Utility.Pure> authorDTOs;
+            Set<AuthorDTO.Utility.Pure> authorDTOs;
         }
     }
 
@@ -41,23 +38,14 @@ public enum BookDTO {
         ;
 
         @Data
-        @Schema(description = "RequestDTO Книги")
         public static class Public implements YearPublished, Title, NumberOfPages, Price {
             String title;
             Integer yearPublished;
             Integer numberOfPages;
             Integer price;
-            @Schema(description = "Nested ресурс авторов")
-            List<AuthorDTO.Utility.Pure> authorDTOs;
-            @Schema(description = "Nested ресурс склада")
+            Set<AuthorDTO.Utility.Pure> authorDTOs;
             BookWarehouseDTO.Utility.Pure bookWarehouse;
-            @Schema(description = "Nested ресурс деталей заказа")
             List<OrderDetailsDTO.Utility.Pure> orderDetailsDTOList;
-        }
-
-        @Data
-        public static class Id implements BookId {
-            Long bookId;
         }
     }
 
@@ -65,8 +53,7 @@ public enum BookDTO {
         ;
 
         @Data
-        public static class Pure implements BookId, Title, YearPublished, NumberOfPages, Price {
-            Long bookId;
+        public static class Pure implements Title, YearPublished, NumberOfPages, Price {
             String title;
             Integer yearPublished;
             Integer numberOfPages;
@@ -103,6 +90,6 @@ public enum BookDTO {
     }
 
     private interface Authors {
-        List<Author> getAuthorDTOs();
+        Set<Author> getAuthorDTOs();
     }
 }

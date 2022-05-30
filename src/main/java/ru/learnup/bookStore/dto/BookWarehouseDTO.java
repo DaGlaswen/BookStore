@@ -28,17 +28,16 @@ public enum BookWarehouseDTO {
             ;
 
             @Data
-            public static class Public implements BookWarehouseId, BookDTOField {
-                Long bookWarehouseId;
+            public static class Public implements BookDTOField, BooksLeftInStore {
                 BookDTO.Utility.Pure book;
+                Integer booksLeftInStore;
             }
         }
 
         @Data
-        public static class Pure implements BookWarehouseId, BookDTOField, BooksLeftInStore {
-            Long bookWarehouseId;
+        public static class Pure implements BookDTOField, BooksLeftInStore {
             BookDTO.Utility.Pure book;
-            Integer booksLeftInStore;
+            Integer booksLeftInStore; // ??
         }
     }
 
