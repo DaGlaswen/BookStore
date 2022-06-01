@@ -13,8 +13,7 @@ import ru.learnup.bookStore.service.interfaces.AuthorService;
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.Specification.where;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -22,29 +21,32 @@ public class AuthorServiceImpl implements AuthorService {
 
     private AuthorRepository authorRepository;
 
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
     @Transactional
+    @Override
     public Author createAuthor(Author author) {
         return authorRepository.save(author);
     }
 
-//    @Transactional
-//    public Author addBookToAuthor(Author author, Book book) {
-//        Optional<List<Book>> books = Optional.of(author.getBooks());
-//        books.ifPresent(author.setBooks(books.get().add(book)));
-//    }
 
+    @Override
     public List<Author> getAuthors(Pageable pageable) {
-        return authorRepository.findAll();
+        return authorRepository.findAll(pageable).stream().collect(Collectors.toList());
     }
 
-//    public Author getAuthorBy(AuthorFilter filter) {
-//        Specification<Author> specification = where(byFilter(filter));
-//        return authorRepository.findAll(specification);
-//    }
+    @Override
+    public List<Author> getAllBySpec(Specification<Author> spec) {
+        return authorRepository.findAll(spec).stream().collect(Collectors.toList());
+    }
+
 
     @Transactional
     @Lock(value = LockModeType.READ)
-    public Author update(Author author) {
+    @Override
+    public Author updateAuthor(Author author) {
         try {
             return authorRepository.save(author);
         } catch (OptimisticLockException e) {
@@ -53,8 +55,15 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
-    public Boolean delete(Long id) {
+    @Override
+    @Transactional
+    public Boolean deleteAuthor(Long id) {
         authorRepository.delete(authorRepository.getById(id));
         return true;
+    }
+
+    @Override
+    public Author getById(Long id) {
+        return authorRepository.getById(id);
     }
 }

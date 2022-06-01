@@ -5,6 +5,7 @@ import lombok.Value;
 import ru.learnup.bookStore.entity.Customer;
 
 import javax.validation.constraints.Positive;
+import java.time.LocalDate;
 import java.util.List;
 
 public enum BookOrderDTO {
@@ -14,12 +15,13 @@ public enum BookOrderDTO {
         ;
 
         @Data
-        public static class Public implements BookOrderId, CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount {
+        public static class Public implements BookOrderId, CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount, PurchasedOn {
 
             Long bookOrderId;
             CustomerDTO.Utility.Pure customer;
             List<OrderDetailsDTO.Utility.Pure> orderDetails;
             Integer totalCheckAmount;
+            LocalDate purchasedOn;
 
         }
     }
@@ -28,11 +30,13 @@ public enum BookOrderDTO {
         ;
 
         @Data
-        public static class Public implements CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount {
+        public static class Public implements CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount, PurchasedOn {
 
             CustomerDTO.Utility.Pure customer;
             List<OrderDetailsDTO.Utility.Pure> orderDetails;
             Integer totalCheckAmount;
+            LocalDate purchasedOn;
+
         }
     }
 
@@ -40,16 +44,22 @@ public enum BookOrderDTO {
         ;
 
         @Data
-        public static class Pure implements CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount {
-            CustomerDTO.Utility.Pure customer; // ??
-            List<OrderDetailsDTO.Utility.Pure> orderDetails; // ??
+        public static class Pure implements CustomerDTOField, OrderDetailsDTOListField, TotalCheckAmount, PurchasedOn {
+            CustomerDTO.Utility.Pure customer;
+            List<OrderDetailsDTO.Utility.Pure> orderDetails;
             Integer totalCheckAmount;
+            LocalDate purchasedOn;
+
         }
 
     }
 
     private interface BookOrderId {
         @Positive Long getBookOrderId();
+    }
+
+    private interface PurchasedOn {
+        LocalDate getPurchasedOn();
     }
 
     private interface CustomerDTOField {

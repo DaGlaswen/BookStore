@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +20,9 @@ public class BookOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookOrderId;
+
+    @Column(columnDefinition = "DATE")
+    private LocalDate purchasedOn;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")

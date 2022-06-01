@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public record MessageProducer(String topicName, JmsTemplate jmsTemplate) {
+public record MessageSender(String topicName, JmsTemplate jmsTemplate) {
 
-    public MessageProducer(
+    public MessageSender(
             @Value("${topic.name}") String topicName,
             JmsTemplate jmsTemplate) {
         this.topicName = topicName;
@@ -19,10 +19,9 @@ public record MessageProducer(String topicName, JmsTemplate jmsTemplate) {
 
     public void sendMessage(String message) {
         try {
-            log.debug("Attempting Send message to Topic: " + topicName);
             jmsTemplate.convertAndSend(topicName, message);
         } catch (Exception e) {
-            log.error("Receive Exception during send Message: ", e);
+            log.error("Received an exception when sending a message: ", e);
         }
     }
 

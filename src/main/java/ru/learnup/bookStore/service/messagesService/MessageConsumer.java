@@ -4,20 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import java.io.IOException;
 
-@Component
+@Service
 @Slf4j
 public class MessageConsumer implements MessageListener {
-
-    private final FileDirectoryProvider fileDirectoryProvider;
-
-    public MessageConsumer(FileDirectoryProvider fileDirectoryProvider) {
-        this.fileDirectoryProvider = fileDirectoryProvider;
-    }
 
     @JmsListener(destination = "${topic.name}")
     @Override
@@ -25,14 +20,10 @@ public class MessageConsumer implements MessageListener {
         try{
             ActiveMQTextMessage textMessage = (ActiveMQTextMessage) message;
             String msg = textMessage.getText();
-            log.info("Received Message: "+ msg);
+            log.info("Received a message: " + msg);
         } catch(Exception e) {
-            log.error("Received Exception : "+ e);
+            log.error("Received an exception : " + e);
         }
-    }
-
-    public void writeIntoFile(String fileName, String text) throws IOException {
-        fileDirectoryProvider.writeString(fileName, text);
     }
 
 }

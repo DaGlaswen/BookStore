@@ -6,7 +6,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.learnup.bookStore.entity.Book;
 import ru.learnup.bookStore.entity.BookWarehouse;
+import ru.learnup.bookStore.exception.EntityNotFoundException;
+import ru.learnup.bookStore.repository.AuthorRepository;
 import ru.learnup.bookStore.repository.BookWarehouseRepository;
 import ru.learnup.bookStore.service.interfaces.BookWarehouseService;
 
@@ -25,8 +28,8 @@ public class BookWarehouseServiceImpl implements BookWarehouseService {
         this.bookWarehouseRepository = bookWarehouseRepository;
     }
 
-    @Override
     @Transactional
+    @Override
     public BookWarehouse createBookWarehouse(BookWarehouse bookWarehouse) {
         return bookWarehouseRepository.save(bookWarehouse);
     }
@@ -44,7 +47,6 @@ public class BookWarehouseServiceImpl implements BookWarehouseService {
     }
 
     @Override
-    @Transactional
     public Boolean deleteBookWarehouse(Long id) {
         bookWarehouseRepository.delete(bookWarehouseRepository.getById(id));
         return true;
@@ -55,6 +57,7 @@ public class BookWarehouseServiceImpl implements BookWarehouseService {
         return bookWarehouseRepository.getById(id);
     }
 
+
     @Override
     public List<BookWarehouse> getBookWarehouses(Pageable pageable) {
         return bookWarehouseRepository.findAll(pageable).stream().collect(Collectors.toList());
@@ -62,6 +65,6 @@ public class BookWarehouseServiceImpl implements BookWarehouseService {
 
     @Override
     public List<BookWarehouse> getAllBySpec(Specification<BookWarehouse> spec) {
-        return bookWarehouseRepository.findAll(spec);
+        return bookWarehouseRepository.findAll(spec).stream().collect(Collectors.toList());
     }
 }

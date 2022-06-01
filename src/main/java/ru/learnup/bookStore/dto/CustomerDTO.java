@@ -26,11 +26,12 @@ public enum CustomerDTO {
         ;
 
         @Data
-        public static class Public implements CustomerId, FirstName, LastName, BirthDate {
+        public static class Public implements CustomerId, FirstName, LastName, BirthDate, BookOrdersDTOField {
             Long customerId;
             String firstName;
             String lastName;
             LocalDate birthDate;
+            List<BookOrderDTO.Utility.Pure> bookOrders;
         }
     }
 
@@ -38,11 +39,13 @@ public enum CustomerDTO {
         ;
 
         @Data
-        public static class Public implements CustomerId, FirstName, LastName, BirthDate {
+        public static class Public implements FirstName, LastName, BirthDate, BookOrdersDTOField {
             Long customerId;
             String firstName;
             String lastName;
             LocalDate birthDate;
+            List<BookOrderDTO.Utility.Pure> bookOrders;
+
         }
     }
 

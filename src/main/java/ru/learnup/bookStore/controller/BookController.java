@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -23,7 +24,7 @@ import ru.learnup.bookStore.entity.Author;
 import ru.learnup.bookStore.entity.Book;
 import ru.learnup.bookStore.entity.BookWarehouse;
 import ru.learnup.bookStore.entity.OrderDetails;
-import ru.learnup.bookStore.service.implementation.BookServiceImpl;
+import ru.learnup.bookStore.service.interfaces.BookService;
 import ru.learnup.bookStore.specification.builder.BookSpecificationsBuilder;
 import ru.learnup.bookStore.specification.util.SearchOperation;
 
@@ -40,11 +41,11 @@ import java.util.stream.Collectors;
 @Tag(name="BookController", description="Контроллирует CRUD операции с энтити Book")
 public class BookController {
 
-    BookServiceImpl bookServiceImpl;
+    BookService bookService;
     ModelMapper modelMapper;
 
-    public BookController(BookServiceImpl bookServiceImpl, ModelMapper modelMapper) {
-        this.bookServiceImpl = bookServiceImpl;
+    public BookController(BookService bookService, ModelMapper modelMapper) {
+        this.bookService = bookService;
         this.modelMapper = modelMapper;
     }
 
@@ -57,8 +58,8 @@ public class BookController {
     public ResponseEntity<List<BookDTO.Response.Public>> getBooks(@RequestParam(value = "page", defaultValue = "0") int page,
                                                                   @RequestParam(value = "size", defaultValue = "5") int size,
                                                                   @RequestParam(value = "sort", defaultValue = "title") String sort,
-                                                                  Pageable pageable) {
-        List<Book> books = bookServiceImpl.getBooks(pageable);
+                                                                  @PageableDefault(size = 10) Pageable pageable) {
+        List<Book> books = bookService.getBooks(pageable);
         List<BookDTO.Response.Public> mappedBooks = new ArrayList<>(books.size());
         for (Book book :
                 books) {
@@ -69,7 +70,7 @@ public class BookController {
 
     @GetMapping("/{bookId}")
     public ResponseEntity<BookDTO.Response.Public> getBookById(@PathVariable Long bookId) {
-        Book book = bookServiceImpl.getById(bookId);
+        Book book = bookService.getById(bookId);
         return new ResponseEntity<>(modelMapper.map(book, BookDTO.Response.Public.class), HttpStatus.OK);
     }
 
@@ -77,7 +78,7 @@ public class BookController {
     @Secured("ROLE_ADMIN")
     public ResponseEntity<BookDTO.Response.Public> createBook(@RequestBody BookDTO.Request.Public newBook) {
         Book book = modelMapper.map(newBook, Book.class);
-        return new ResponseEntity<>(modelMapper.map(bookServiceImpl.createBook(book), BookDTO.Response.Public.class),
+        return new ResponseEntity<>(modelMapper.map(bookService.createBook(book), BookDTO.Response.Public.class),
                 HttpStatus.CREATED);
     }
 
@@ -93,15 +94,14 @@ public class BookController {
         }
 
         Specification<Book> spec = builder.build();
-        return new ResponseEntity<>(modelMapper.map(bookServiceImpl.getAllBySpec(spec),
+        return new ResponseEntity<>(modelMapper.map(bookService.getAllBySpec(spec),
                 BookDTO.Response.Public.class), HttpStatus.OK);
     }
 
-//    PutMapping
     @PutMapping("/{bookId}")
     @Secured({"ROLE_ADMIN"})
-    public BookDTO.Response.Public updateBook(@PathVariable("bookId") Long bookId, @RequestBody BookDTO.Request.Public body) {
-        Book book = bookServiceImpl.getById(bookId);
+    public ResponseEntity<BookDTO.Response.Public> updateBook(@PathVariable Long bookId, @RequestBody BookDTO.Request.Public body) {
+        Book book = bookService.getById(bookId);
         if (!book.getNumberOfPages().equals(body.getNumberOfPages())) {
             book.setNumberOfPages(body.getNumberOfPages());
         }
@@ -122,15 +122,15 @@ public class BookController {
             book.setOrderDetailsList(orderDetailsEntities);
         }
 
-        Book updatedBook = bookServiceImpl.updateBook(book);
+        Book updatedBook = bookService.updateBook(book);
 
-        return modelMapper.map(updatedBook, BookDTO.Response.Public.class);
+        return new ResponseEntity<>(modelMapper.map(updatedBook, BookDTO.Response.Public.class), HttpStatus.OK);
     }
 
     @DeleteMapping
     @Secured({"ROLE_ADMIN"})
     public Boolean deleteBook(@PathVariable Long id) {
-        return bookServiceImpl.deleteBook(id);
+        return bookService.deleteBook(id);
     }
 
 }

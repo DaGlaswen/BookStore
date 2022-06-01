@@ -2,12 +2,7 @@ package ru.learnup.bookStore.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Value;
-import org.springframework.hateoas.RepresentationModel;
 import ru.learnup.bookStore.entity.Author;
-import ru.learnup.bookStore.dto.BookWarehouseDTO;
-import ru.learnup.bookStore.entity.Book;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -22,6 +17,7 @@ public enum BookDTO {
         ;
 
         @Data
+        @Schema(description = "Response body")
         public static class Public implements BookId, Title, YearPublished, NumberOfPages, Price, BookWarehouseDTOField {
             Long bookId;
             String title;
@@ -38,6 +34,7 @@ public enum BookDTO {
         ;
 
         @Data
+        @Schema(description = "Request Body of a Book")
         public static class Public implements YearPublished, Title, NumberOfPages, Price {
             String title;
             Integer yearPublished;

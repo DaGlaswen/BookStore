@@ -11,6 +11,7 @@ import ru.learnup.bookStore.entity.Book;
 import ru.learnup.bookStore.exception.EntityNotFoundException;
 import ru.learnup.bookStore.repository.AuthorRepository;
 import ru.learnup.bookStore.repository.BookRepository;
+import ru.learnup.bookStore.service.interfaces.BookService;
 
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
@@ -20,14 +21,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class BookServiceImpl implements ru.learnup.bookStore.service.interfaces.BookService {
+public class BookServiceImpl implements BookService {
 
     BookRepository bookRepository;
-    AuthorRepository authorRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
     }
 
     @Transactional
@@ -46,21 +45,22 @@ public class BookServiceImpl implements ru.learnup.bookStore.service.interfaces.
         }
     }
 
-    @Transactional
     public Boolean deleteBook(Long id) {
         bookRepository.delete(bookRepository.getById(id));
         return true;
     }
 
     public Book getById(Long id) throws EntityNotFoundException {
-        return bookRepository.getById(id);
+        Book book = bookRepository.getById(id);
+        return book;
     }
 
     public List<Book> getBooks(Pageable pageable) {
         return bookRepository.findAll(pageable).stream().collect(Collectors.toList());
     }
 
+    @Override
     public List<Book> getAllBySpec(Specification<Book> spec) {
-        return bookRepository.findAll(spec);
+        return bookRepository.findAll(spec).stream().collect(Collectors.toList());
     }
 }

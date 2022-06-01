@@ -10,30 +10,29 @@ import ru.learnup.bookStore.dto.BookDTO;
 public enum BookWarehouseDTO {
     ;
 
-    public enum Utility {
+    public enum Response {
+            ;
+
+        @Data
+        public static class Public implements BookWarehouseId, BookDTOField, BooksLeftInStore {
+            Long bookWarehouseId;
+            BookDTO.Utility.Pure book;
+            Integer booksLeftInStore;
+        }
+    }
+
+    public enum Request {
         ;
 
-        public enum Response {
-            ;
-
-            @Data
-            public static class Public implements BookWarehouseId, BookDTOField, BooksLeftInStore {
-                Long bookWarehouseId;
-                BookDTO.Utility.Pure book;
-                Integer booksLeftInStore;
-            }
+        @Data
+        public static class Public implements BookDTOField, BooksLeftInStore {
+            BookDTO.Utility.Pure book;
+            Integer booksLeftInStore;
         }
+    }
 
-        public enum Request {
-            ;
-
-            @Data
-            public static class Public implements BookDTOField, BooksLeftInStore {
-                BookDTO.Utility.Pure book;
-                Integer booksLeftInStore;
-            }
-        }
-
+    public enum Utility {
+        ;
         @Data
         public static class Pure implements BookDTOField, BooksLeftInStore {
             BookDTO.Utility.Pure book;
