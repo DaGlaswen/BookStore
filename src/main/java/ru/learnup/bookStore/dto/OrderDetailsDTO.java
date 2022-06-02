@@ -1,9 +1,7 @@
 package ru.learnup.bookStore.dto;
 
 import lombok.Data;
-import lombok.Value;
 
-import javax.persistence.criteria.Order;
 import javax.validation.constraints.Positive;
 
 public enum OrderDetailsDTO {

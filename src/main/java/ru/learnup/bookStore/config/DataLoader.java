@@ -7,12 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.learnup.bookStore.entity.Role;
 import ru.learnup.bookStore.entity.User;
 import ru.learnup.bookStore.repository.RoleRepository;
-import ru.learnup.bookStore.repository.UserRepository;
 import ru.learnup.bookStore.service.UserService;
-
-import java.util.HashSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ConditionalOnProperty(
         prefix = "application.runner", // Set this property to true when running the application for the first time, then delete the property!

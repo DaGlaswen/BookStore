@@ -2,12 +2,9 @@ package ru.learnup.bookStore.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.Value;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
-import java.util.List;
 import java.util.Set;
 
 public enum AuthorDTO {

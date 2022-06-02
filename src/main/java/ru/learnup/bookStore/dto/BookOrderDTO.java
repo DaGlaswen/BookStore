@@ -1,8 +1,6 @@
 package ru.learnup.bookStore.dto;
 
 import lombok.Data;
-import lombok.Value;
-import ru.learnup.bookStore.entity.Customer;
 
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;

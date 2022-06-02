@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,7 @@ public class BookOrder {
     private Customer customer;
 
     @OneToMany(mappedBy = "bookOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<OrderDetails> orderDetailsList;
+    private List<OrderDetails> orderDetailsList = new ArrayList<>();
 
     @Min(value = 0)
     @Column(nullable = false)

@@ -1,7 +1,6 @@
 package ru.learnup.bookStore.dto;
 
 import lombok.Data;
-import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;

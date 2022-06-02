@@ -1,11 +1,9 @@
 package ru.learnup.bookStore.dto;
 
+import lombok.Data;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
-
-import lombok.Data;
-import lombok.Value;
-import ru.learnup.bookStore.dto.BookDTO;
 
 public enum BookWarehouseDTO {
     ;
