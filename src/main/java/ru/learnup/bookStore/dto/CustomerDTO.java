@@ -39,7 +39,6 @@ public enum CustomerDTO {
 
         @Data
         public static class Public implements FirstName, LastName, BirthDate, BookOrdersDTOField {
-            Long customerId;
             String firstName;
             String lastName;
             LocalDate birthDate;

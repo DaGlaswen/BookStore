@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ import ru.learnup.bookStore.specification.util.SearchOperation;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,6 +99,16 @@ public class BookController {
         return new ResponseEntity<>(modelMapper.map(bookService.getAllBySpec(spec),
                 BookDTO.Response.Public.class), HttpStatus.OK);
     }
+
+    @PatchMapping("/{bookId}")
+    public ResponseEntity<BookDTO.Response.Public> partialUpdateGeneric(
+            @RequestBody Map<String, Object> updates,
+            @PathVariable String bookId) {
+
+        bookService.updateBook(updates, id);
+        return ResponseEntity.ok("resource updated");
+    }
+
 
     @PutMapping("/{bookId}")
     @Secured({"ROLE_ADMIN"})

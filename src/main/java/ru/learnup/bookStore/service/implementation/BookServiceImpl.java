@@ -1,7 +1,6 @@
 package ru.learnup.bookStore.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Lock;
@@ -9,14 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.bookStore.entity.Book;
 import ru.learnup.bookStore.exception.EntityNotFoundException;
-import ru.learnup.bookStore.repository.AuthorRepository;
 import ru.learnup.bookStore.repository.BookRepository;
 import ru.learnup.bookStore.service.interfaces.BookService;
 
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -44,6 +42,14 @@ public class BookServiceImpl implements BookService {
             throw e;
         }
     }
+
+//    @Transactional
+//    @Lock(value = LockModeType.READ)
+//    public Book updateBookByMap(Map map, Long bookId) {
+//        try {
+//            return bookRepository.save(map, bookId)
+//        }
+//    }
 
     public Boolean deleteBook(Long id) {
         bookRepository.delete(bookRepository.getById(id));
